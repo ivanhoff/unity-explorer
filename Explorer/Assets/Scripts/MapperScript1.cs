@@ -8,7 +8,6 @@ public class MapperScript1 : MonoBehaviour
     
     private Camera mapperCamera;
     private GameObject freeCamera;
-    // private GameObject avatar;
     
     private bool showButton = true;
     private string screenshotPath;
@@ -27,18 +26,7 @@ public class MapperScript1 : MonoBehaviour
 
     void Start()
     {
-        Debug.Log("Mapper script is ready!");
-        
-        // Find and store the MapperCamera and avatar reference
-        // mapperCamera = GameObject.Find("MapperCamera").GetComponent<Camera>();
-        // avatar = GameObject.Find("CharacterObject(Clone)");
-        Invoke("FindFreeCamera", 20f);
-        
-        // if (mapperCamera == null)
-        // {
-        //     Debug.LogError("MapperCamera not found!");
-        // }
-
+        Debug.Log("Mapper script is loaded");
         // Get desktop path and create map folder
         string desktopPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Desktop);
         screenshotPath = Path.Combine(desktopPath, "map");
@@ -49,7 +37,7 @@ public class MapperScript1 : MonoBehaviour
             Directory.CreateDirectory(screenshotPath);
         }
         
-        UnityEngine.Debug.Log("Screenshots will be saved to: " + screenshotPath);
+        Debug.Log("Screenshots will be saved to: " + screenshotPath);
 
         getCoordsFromFile();
     }
@@ -105,26 +93,11 @@ public class MapperScript1 : MonoBehaviour
 
         Debug.Log("now moving to position: (" + currentX + ", " + currentY + ")");
 
-        // avatar = GameObject.Find("CharacterObject(Clone)");
-        // freeCamera = GameObject.Find("FreeCamera");
-
-        // if (freeCamera == null)
-        // {
-        //     Debug.LogError("freeCamera not found!");
-        // }
-        // else
-        // {
-        //     Debug.LogError("freeCamera successfully found!");
-        // }
-
         // move mapperCamera to current position
         UnityEngine.Vector3 targetPosition = new UnityEngine.Vector3(parcelSize / 2, 0, parcelSize / 2) + currentPosition;
-        // UnityEngine.Vector3 delta = mapperCamera.transform.position - targetPosition;
         UnityEngine.Vector3 delta = freeCamera.transform.position - targetPosition;
         if (delta.magnitude > 0.1f)
         {
-            // avatar.transform.position = targetPosition;
-            // mapperCamera.transform.position = targetPosition;
             freeCamera.transform.position = targetPosition;
             StartCoroutine(PanCamera());
         }
@@ -153,6 +126,7 @@ public class MapperScript1 : MonoBehaviour
             }
         }
 
+        Debug.Log("Mapper ready to Start");
     }
 
     private string GetCurrentScreenshotPath(string destDirectory)
