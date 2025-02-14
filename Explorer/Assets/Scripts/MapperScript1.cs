@@ -62,6 +62,13 @@ public class MapperScript1 : MonoBehaviour
             {
                 Debug.Log("START MAPPING!");
                 isMapping = true;
+
+                FindFreeCamera();
+
+                FindAndDeactivate("Satellite View");
+                FindAndDeactivate("REMOTE_ENTITIES");
+
+                //Start Mapping
                 GoToNextParcel();
             }
         }
@@ -242,13 +249,27 @@ public class MapperScript1 : MonoBehaviour
     {
         freeCamera = GameObject.Find("FreeCamera");
 
-        if (freeCamera == null)
+        if (freeCamera != null)
         {
-            Debug.LogError("freeCamera not found!");
+            Debug.Log("freeCamera successfully found!");
         }
         else
         {
-            Debug.LogError("freeCamera successfully found!");
+            Debug.LogError("freeCamera not found!");
+        }
+    }
+
+    void FindAndDeactivate(string objectName)
+    {
+        GameObject obj = GameObject.Find(objectName);
+        if (obj != null)
+        {
+            obj.SetActive(false);
+            Debug.Log(objectName + " deactivated!");
+        }
+        else
+        {
+            Debug.LogWarning(objectName + " not found!");
         }
     }
 
